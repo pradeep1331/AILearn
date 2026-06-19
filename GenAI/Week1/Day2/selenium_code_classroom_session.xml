@@ -1,0 +1,33 @@
+{
+    "id": "chatcmpl-d722bebe-dd82-4e72-95c2-2fb682d4a361",
+    "object": "chat.completion",
+    "created": 1781859785,
+    "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": " \n```java\npackage com.testautomation.sample;\n\nimport org.openqa.selenium.By;\nimport org.openqa.selenium.WebDriver;\nimport org.openqa.selenium.WebElement;\nimport org.openqa.selenium.chrome.ChromeDriver;\nimport org.openqa.selenium.support.ui.ExpectedConditions;\nimport org.openqa.selenium.support.ui.WebDriverWait;\nimport org.testng.annotations.AfterTest;\nimport org.testng.annotations.BeforeTest;\nimport org.testng.annotations.Test;\n\n/**\n * Sample Selenium TestNG test class.\n *\n * @author [Your Name]\n */\npublic class SampleTest {\n\n    private WebDriver driver;\n    private WebDriverWait wait;\n\n    /**\n     * Setup method to initialize WebDriver and navigate to the test URL.\n     */\n    @BeforeTest\n    public void setup() {\n        System.setProperty(\"webdriver.chrome.driver\", \"/path/to/chromedriver\");\n        driver = new ChromeDriver();\n        driver.manage().window().maximize();\n        driver.get(\"https://www.sample.com\");\n        wait = new WebDriverWait(driver, 10);\n    }\n\n    /**\n     * Test method to verify the login functionality.\n     */\n    @Test\n    public void testLogin() {\n        WebElement usernameInput = wait.until(ExpectedConditions.elementToBeClickable(By.name(\"username\")));\n        usernameInput.sendKeys(\"username\");\n\n        WebElement passwordInput = driver.findElement(By.xpath(\"//input[@type='password']\"));\n        passwordInput.sendKeys(\"password\");\n\n        WebElement loginButton = driver.findElement(By.xpath(\"//button[text()='Login']\"));\n        loginButton.click();\n\n        WebElement successMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(\"//div[text()='Login successful']\")));\n        org.testng.Assert.assertTrue(successMessage.isDisplayed());\n    }\n\n    /**\n     * Teardown method to close the WebDriver instance.\n     */\n    @AfterTest\n    public void teardown() {\n        driver.quit();\n    }\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "queue_time": 0.181837206,
+        "prompt_tokens": 263,
+        "prompt_time": 0.009983784,
+        "completion_tokens": 378,
+        "completion_time": 0.853287063,
+        "total_tokens": 641,
+        "total_time": 0.863270847
+    },
+    "usage_breakdown": null,
+    "system_fingerprint": "fp_f0bb21cb36",
+    "x_groq": {
+        "id": "req_01kvfhx5ttewysdgk1a932nfv8",
+        "seed": 1663383193
+    },
+    "service_tier": "on_demand"
+}

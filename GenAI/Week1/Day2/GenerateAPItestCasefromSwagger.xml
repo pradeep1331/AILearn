@@ -1,0 +1,37 @@
+{
+    "id": "chatcmpl-c3352c95-bad2-4567-ae54-932b52ca7959",
+    "object": "chat.completion",
+    "created": 1781862914,
+    "model": "openai/gpt-oss-120b",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "import io.restassured.RestAssured;\nimport io.restassured.http.ContentType;\nimport io.restassured.response.Response;\nimport org.testng.Assert;\nimport org.testng.annotations.BeforeClass;\nimport org.testng.annotations.Test;\nimport java.util.*;\n\nimport static org.hamcrest.Matchers.*;\n\npublic class PetApiCrudTest {\n\n    private static final String BASE_URI = \"https://petstore.swagger.io/v2\";\n    private static final long PET_ID = System.currentTimeMillis();\n\n    @BeforeClass\n    public void setup() {\n        RestAssured.baseURI = BASE_URI;\n    }\n\n    private Map<String, Object> buildPetPayload(long id, String name, String status) {\n        Map<String, Object> pet = new HashMap<>();\n        pet.put(\"id\", id);\n        pet.put(\"name\", name);\n        pet.put(\"photoUrls\", Collections.singletonList(\"string\"));\n\n        Map<String, Object> category = new HashMap<>();\n        category.put(\"id\", 0);\n        category.put(\"name\", \"string\");\n        pet.put(\"category\", category);\n\n        Map<String, Object> tag = new HashMap<>();\n        tag.put(\"id\", 0);\n        tag.put(\"name\", \"string\");\n        pet.put(\"tags\", Collections.singletonList(tag));\n\n        pet.put(\"status\", status);\n        return pet;\n    }\n\n    @Test\n    public void createPet() {\n        Map<String, Object> payload = buildPetPayload(PET_ID, \"Rex\", \"available\");\n\n        Response response = RestAssured.given()\n                .contentType(ContentType.JSON)\n                .body(payload)\n                .when()\n                .post(\"/pet\")\n                .then()\n                .statusCode(200)\n                .body(\"id\", equalTo((int) PET_ID))\n                .body(\"name\", equalTo(\"Rex\"))\n                .body(\"status\", equalTo(\"available\"))\n                .extract()\n                .response();\n\n        Assert.assertEquals(response.jsonPath().getLong(\"id\"), PET_ID);\n    }\n\n    @Test(dependsOnMethods = \"createPet\")\n    public void getPetById() {\n        Response response = RestAssured.given()\n                .pathParam(\"petId\", PET_ID)\n                .when()\n                .get(\"/pet/{petId}\")\n                .then()\n                .statusCode(200)\n                .body(\"id\", equalTo((int) PET_ID))\n                .body(\"name\", equalTo(\"Rex\"))\n                .body(\"status\", equalTo(\"available\"))\n                .extract()\n                .response();\n\n        Assert.assertEquals(response.jsonPath().getLong(\"id\"), PET_ID);\n    }\n\n    @Test(dependsOnMethods = \"getPetById\")\n    public void updatePet() {\n        Map<String, Object> payload = buildPetPayload(PET_ID, \"Rex\", \"sold\");\n\n        Response response = RestAssured.given()\n                .contentType(ContentType.JSON)\n                .body(payload)\n                .when()\n                .put(\"/pet\")\n                .then()\n                .statusCode(200)\n                .body(\"id\", equalTo((int) PET_ID))\n                .body(\"status\", equalTo(\"sold\"))\n                .extract()\n                .response();\n\n        Assert.assertEquals(response.jsonPath().getString(\"status\"), \"sold\");\n    }\n\n    @Test(dependsOnMethods = \"updatePet\")\n    public void deletePet() {\n        RestAssured.given()\n                .pathParam(\"petId\", PET_ID)\n                .when()\n                .delete(\"/pet/{petId}\")\n                .then()\n                .statusCode(200)\n                .body(\"message\", equalTo(String.valueOf(PET_ID)));\n\n        // Verify deletion\n        RestAssured.given()\n                .pathParam(\"petId\", PET_ID)\n                .when()\n                .get(\"/pet/{petId}\")\n                .then()\n                .statusCode(404);\n    }\n}",
+                "reasoning": "We need to produce Java code with imports, class, beforeclass to set baseURI, test methods for CRUD. Use Rest Assured, TestNG. Use assertions from org.hamcrest or TestNG's Assert. Provide request body JSON maybe using a Map or POJO. Use reusable method for pet payload maybe. Use a static petId variable to share across methods. Ensure ordering of tests? Could use dependsOnMethods. Provide test methods with @Test.\n\nWill generate code:\n\nimport io.restassured.RestAssured;\nimport io.restassured.http.ContentType;\nimport io.restassured.response.Response;\nimport org.testng.annotations.BeforeClass;\nimport org.testng.annotations.Test;\nimport static org.hamcrest.Matchers.*;\nimport org.testng.Assert;\n\nClass PetApiCrudTest.\n\n@BeforeClass set baseURI = \"https://petstore.swagger.io/v2\";\n\nstatic long petId = System.currentTimeMillis(); // unique.\n\nMethods:\n\npublic void createPet() { \n    String payload = \"{\\\"id\\\":\" + petId + \",\\\"category\\\":{\\\"id\\\":0,\\\"name\\\":\\\"string\\\"},\\\"name\\\":\\\"Rex\\\",\\\"photoUrls\\\":[\\\"string\\\"],\\\"tags\\\":[{\\\"id\\\":0,\\\"name\\\":\\\"string\\\"}],\\\"status\\\":\\\"available\\\"}\";\n    Response response = RestAssured.given()\n        .contentType(ContentType.JSON)\n        .body(payload)\n        .when()\n        .post(\"/pet\")\n        .then()\n        .statusCode(200)\n        .body(\"id\", equalTo((int)petId)) // note int vs long.\n        .body(\"name\", equalTo(\"Rex\"))\n        .extract().response();\n}\n\nBut need to cast properly. Use .body(\"id\", equalTo(petId.intValue())).\n\nGet:\n\nResponse get = given().pathParam(\"petId\", petId).when().get(\"/pet/{petId}\")... Validate.\n\nUpdate: maybe change status to \"sold\". Provide body with same id.\n\nDelete: Delete path.\n\nAdd dependsOnMethods for ordering.\n\nOk.\n\nAlso include reusable method to build payload map using HashMap.\n\nSimplify: Use Map<String,Object>.\n\nWill produce code.\n\nLet's write final code."
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "queue_time": 0.282400836,
+        "prompt_tokens": 396,
+        "prompt_time": 0.018920783,
+        "completion_tokens": 1251,
+        "completion_time": 2.592899505,
+        "total_tokens": 1647,
+        "total_time": 2.611820288,
+        "completion_tokens_details": {
+            "reasoning_tokens": 440
+        }
+    },
+    "usage_breakdown": null,
+    "system_fingerprint": "fp_ca5edfaab2",
+    "x_groq": {
+        "id": "req_01kvfmwk4pesvsr2d5d5bwh8fa",
+        "seed": 956649198
+    },
+    "service_tier": "on_demand"
+}

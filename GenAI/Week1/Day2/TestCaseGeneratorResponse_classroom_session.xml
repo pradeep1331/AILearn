@@ -1,0 +1,33 @@
+{
+    "id": "chatcmpl-08ff101d-28b9-4f2c-8cf5-9455095b568d",
+    "object": "chat.completion",
+    "created": 1781844440,
+    "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "Based on the provided user story, I've created a set of high-quality test cases to ensure that the Automated Insurance Pre-Authorization for Radiology Tests feature meets the required functionality.\n\n**Test Case 1: Verify Insurance Eligibility via API**\n\n* **Test Case ID:** HC-311-TC-01\n* **Objective:** To verify that the system triggers an API call to the insurance provider to check insurance eligibility when a patient is scheduled for a radiology test.\n* **Preconditions:**\n\t+ Patient is scheduled for a radiology test (CT, MRI, or ultrasound).\n\t+ Insurance provider API is available and configured.\n* **Steps:**\n\t1. Log in as a billing coordinator.\n\t2. Select a patient scheduled for a radiology test.\n\t3. Click on \"Schedule Test\".\n\t4. Verify that the system sends an API request to the insurance provider to check insurance eligibility.\n\t5. Verify that the API request includes the required patient and test information.\n* **Expected Result:** The system successfully sends an API request to the insurance provider and receives a response indicating the patient's insurance eligibility.\n\n**Test Case 2: Pre-Authorization Process for Radiology Tests**\n\n* **Test Case ID:** HC-311-TC-02\n* **Objective:** To verify that the system initiates the pre-authorization process automatically and stores the approval ID in the patient record when authorization is required.\n* **Preconditions:**\n\t+ Patient is scheduled for a radiology test that requires pre-authorization.\n\t+ Insurance provider API indicates that pre-authorization is required.\n* **Steps:**\n\t1. Log in as a billing coordinator.\n\t2. Select a patient scheduled for a radiology test that requires pre-authorization.\n\t3. Click on \"Schedule Test\".\n\t4. Verify that the system initiates the pre-authorization process with the insurance provider.\n\t5. Verify that the system stores the approval ID and approval date in the patient's billing record.\n* **Expected Result:** The system successfully initiates the pre-authorization process, receives an approval ID, and stores it in the patient's billing record.\n\n**Test Case 3: Notification for Non-Covered Tests**\n\n* **Test Case ID:** HC-311-TC-03\n* **Objective:** To verify that the system notifies the billing coordinator and patient when a test is not covered and offers alternative payment options.\n* **Preconditions:**\n\t+ Patient is scheduled for a radiology test that is not covered by their insurance.\n\t+ Insurance provider API indicates that the test is not covered.\n* **Steps:**\n\t1. Log in as a billing coordinator.\n\t2. Select a patient scheduled for a radiology test that is not covered by their insurance.\n\t3. Click on \"Schedule Test\".\n\t4. Verify that the system sends a notification to the billing coordinator and patient indicating that the test is not covered.\n\t5. Verify that the notification includes alternative payment options.\n* **Expected Result:** The system successfully notifies the billing coordinator and patient, and offers alternative payment options.\n\n**Test Case 4: Error Handling for Insurance API Unavailability**\n\n* **Test Case ID:** HC-311-TC-04\n* **Objective:** To verify that the system handles errors when the insurance provider API is unavailable.\n* **Preconditions:**\n\t+ Insurance provider API is unavailable.\n* **Steps:**\n\t1. Log in as a billing coordinator.\n\t2. Select a patient scheduled for a radiology test.\n\t3. Click on \"Schedule Test\".\n\t4. Verify that the system displays an error message indicating that the insurance provider API is unavailable.\n\t5. Verify that the system provides instructions for retrying the API call or contacting support.\n* **Expected Result:** The system successfully handles the error and provides guidance for resolving the issue.\n\n**Test Case 5: Negative Testing for Invalid Patient or Test Information**\n\n* **Test Case ID:** HC-311-TC-05\n* **Objective:** To verify that the system handles invalid patient or test information.\n* **Preconditions:**\n\t+ Patient or test information is invalid or missing.\n* **Steps:**\n\t1. Log in as a billing coordinator.\n\t2. Select a patient scheduled for a radiology test with invalid or missing information.\n\t3. Click on \"Schedule Test\".\n\t4. Verify that the system displays an error message indicating that the patient or test information is invalid.\n\t5. Verify that the system prevents the API call from being sent.\n* **Expected Result:** The system successfully handles the invalid information and prevents errors from occurring.\n\nThese test cases cover the main scenarios and edge cases for the Automated Insurance Pre-Authorization for Radiology Tests feature. By executing these test cases, we can ensure that the system meets the required functionality and provides a seamless experience for billing coordinators and patients."
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "queue_time": 0.139423159,
+        "prompt_tokens": 273,
+        "prompt_time": 0.014413781,
+        "completion_tokens": 983,
+        "completion_time": 2.220963083,
+        "total_tokens": 1256,
+        "total_time": 2.235376864
+    },
+    "usage_breakdown": null,
+    "system_fingerprint": "fp_79da0e0073",
+    "x_groq": {
+        "id": "req_01kvf38twafk6vh343gmpt8k82",
+        "seed": 1861943905
+    },
+    "service_tier": "on_demand"
+}
